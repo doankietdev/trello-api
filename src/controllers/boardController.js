@@ -1,13 +1,14 @@
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import SuccessResponse from '~/utils/SuccessResponse'
 import asyncHandler from '~/utils/asyncHandler'
+import boardService from '~/services/boardService'
 
 const createNew = asyncHandler(async (req, res) => {
   new SuccessResponse({
     statusCode: StatusCodes.CREATED,
     message: ReasonPhrases.CREATED,
     metadata: {
-      reqBody: { ...req.body }
+      board: boardService.createNew(req.body)
     }
   }).send(res)
 })
