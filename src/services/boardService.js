@@ -1,7 +1,8 @@
 import ApiError from '~/utils/ApiError'
 import { slugify } from '~/utils/formatter'
+import boardRepo from '~/repositories/boardRepo'
 
-const createNew = (reqBody) => {
+const createNew = async (reqBody) => {
   try {
     // handle logic
     const newBoard = {
@@ -9,14 +10,14 @@ const createNew = (reqBody) => {
       slug: slugify(reqBody.title)
     }
 
-    // call model
+    const result = await boardRepo.createNew(newBoard)
+    const foundBoard = await boardRepo.findOneById(result.insertedId)
 
     // handle logic with other model
 
     // send mail, notification
 
-    // return
-    return newBoard
+    return foundBoard
   } catch (error) {
     throw new ApiError()
   }

@@ -8,7 +8,7 @@ const createNew = asyncHandler(async (req, res) => {
     statusCode: StatusCodes.CREATED,
     message: ReasonPhrases.CREATED,
     metadata: {
-      board: boardService.createNew(req.body)
+      board: await boardService.createNew(req.body)
     }
   }).send(res)
 })
