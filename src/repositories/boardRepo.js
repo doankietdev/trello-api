@@ -1,5 +1,7 @@
 import { ObjectId } from 'mongodb'
 import boardModel from '~/models/boardModel'
+import columnModel from '~/models/columnModel'
+import cardModel from '~/models/cardModel'
 import { getDB } from '~/configs/mongodb'
 
 const createNew = async (board) => {
@@ -26,6 +28,18 @@ const getDetails = async (boardId) => {
     return (await getDB().collection(boardModel.COLLECTION_NAME).aggregate([
       { $match: {
         _id: new ObjectId(boardId)
+      } },
+      { $lookup: {
+        from: columnModel.COLLECTION_NAME,
+        localField: '_id',
+        foreignField: 'boardId',
+        as: 'columns'
+      } },
+      { $lookup: {
+        from: cardModel.COLLECTION_NAME,
+        localField: '_id',
+        foreignField: 'boardId',
+        as: 'cards'
       } }
     ]).toArray())[0] || null
   } catch (error) {
