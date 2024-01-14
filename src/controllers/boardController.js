@@ -13,6 +13,15 @@ const createNew = asyncHandler(async (req, res) => {
   }).send(res)
 })
 
+const getDetails = asyncHandler(async (req, res) => {
+  new SuccessResponse({
+    metadata: {
+      board: await boardService.getDetails(req.params.id)
+    }
+  }).send(res)
+})
+
 export default {
-  createNew
+  createNew,
+  getDetails
 }

@@ -4,7 +4,11 @@ import boardController from '~/controllers/boardController'
 
 const router = express.Router()
 
-router.get('/')
-router.post('/', boardValidation.createNew, boardController.createNew)
+router.route('/')
+  .get()
+  .post(boardValidation.createNew, boardController.createNew)
+
+router.route('/:id')
+  .get(boardController.getDetails)
 
 export default router

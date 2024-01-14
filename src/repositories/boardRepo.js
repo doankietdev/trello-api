@@ -21,7 +21,20 @@ const findOneById = async (id) => {
   }
 }
 
+const getDetails = async (boardId) => {
+  try {
+    return (await getDB().collection(boardModel.COLLECTION_NAME).aggregate([
+      { $match: {
+        _id: new ObjectId(boardId)
+      } }
+    ]).toArray())[0] || null
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export default {
   createNew,
-  findOneById
+  findOneById,
+  getDetails
 }
