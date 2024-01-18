@@ -23,7 +23,24 @@ const findOneById = async (id) => {
     throw new Error(error)
   }
 }
+
+const pushCardOrderId = async (card) => {
+  try {
+    return await getDB().collection(columnModel.COLLECTION_NAME).findOneAndUpdate(
+      { _id: new ObjectId(card?.columnId) },
+      {
+        $push: { cardOrderIds: new ObjectId(card?._id) },
+        $set: { updatedAt: Date.now() }
+      },
+      { returnDocument: 'after' }
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export default {
   createNew,
-  findOneById
+  findOneById,
+  pushCardOrderId
 }
