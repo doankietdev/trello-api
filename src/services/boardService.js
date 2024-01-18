@@ -27,7 +27,7 @@ const createNew = async (reqBody) => {
 const getDetails = async (boardId) => {
   const foundBoard = await boardRepo.getDetails(boardId)
   if (!foundBoard) {
-    throw new ApiError({ statusCode: StatusCodes.NOT_FOUND, message: 'Board not found' })
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Board not found')
   }
 
   const resBoard = cloneDeep(foundBoard)

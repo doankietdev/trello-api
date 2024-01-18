@@ -5,7 +5,6 @@ import boardController from '~/controllers/boardController'
 const router = express.Router()
 
 router.route('/')
-  .get()
   .post(boardValidation.createNew, boardController.createNew)
 
 router.route('/:id')

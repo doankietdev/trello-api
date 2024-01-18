@@ -15,7 +15,16 @@ const COLLECTION_SCHEMA = Joi.object({
   _destroy: Joi.boolean().default(false)
 })
 
+const validate = async (column) => {
+  try {
+    return await COLLECTION_SCHEMA.validateAsync(column, { abortEarly: false })
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export default {
   COLLECTION_NAME,
-  COLLECTION_SCHEMA
+  COLLECTION_SCHEMA,
+  validate
 }
