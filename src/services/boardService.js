@@ -13,6 +13,9 @@ const createNew = async (reqBody) => {
 
   const result = await boardRepo.createNew(newBoard)
   const foundBoard = await boardRepo.findOneById(result.insertedId)
+  if (foundBoard) {
+    foundBoard.columns = []
+  }
 
   // handle logic with other model
 

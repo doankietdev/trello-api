@@ -6,7 +6,7 @@ import { getDB } from '~/configs/mongodb'
 
 const createNew = async (board) => {
   try {
-    const validBoard = await boardModel.COLLECTION_SCHEMA.validateAsync(board, { abortEarly: false })
+    const validBoard = await boardModel.validate(board)
     return await getDB().collection(boardModel.COLLECTION_NAME).insertOne(validBoard)
   } catch (error) {
     throw new Error(error)
