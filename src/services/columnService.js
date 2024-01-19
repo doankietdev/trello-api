@@ -18,6 +18,11 @@ const createNew = async (reqBody) => {
   return foundColumn
 }
 
+const update = async (columnId, reqBody) => {
+  return await columnRepo.update(columnId, reqBody)
+}
+
 export default {
-  createNew
+  createNew,
+  update
 }
