@@ -21,7 +21,16 @@ const getDetails = asyncHandler(async (req, res) => {
   }).send(res)
 })
 
+const update = asyncHandler(async (req, res) => {
+  new SuccessResponse({
+    metadata: {
+      board: await boardService.update(req.params.id, req.body)
+    }
+  }).send(res)
+})
+
 export default {
   createNew,
-  getDetails
+  getDetails,
+  update
 }
