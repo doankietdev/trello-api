@@ -62,9 +62,28 @@ const pushColumnOrderId = async (column) => {
   }
 }
 
+const update = async (boardId, updateData) => {
+  Object.keys(updateData).forEach(fieldName => {
+    if (boardModel.INVALID_UPDATE_FIELDS.includes(fieldName)) {
+      delete updateData[fieldName]
+    }
+  })
+
+  try {
+    return await getDB().collection(boardModel.COLLECTION_NAME).findOneAndUpdate(
+      { _id: new ObjectId(boardId) },
+      { $set: { ...updateData, updatedAt: Date.now() } },
+      { returnDocument: 'after' }
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export default {
   createNew,
   findOneById,
   getDetails,
-  pushColumnOrderId
+  pushColumnOrderId,
+  update
 }

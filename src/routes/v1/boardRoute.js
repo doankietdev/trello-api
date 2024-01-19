@@ -9,5 +9,6 @@ router.route('/')
 
 router.route('/:id')
   .get(boardController.getDetails)
+  .patch(boardValidation.update, boardController.update)
 
 export default router

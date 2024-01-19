@@ -39,7 +39,12 @@ const getDetails = async (boardId) => {
   return resBoard
 }
 
+const update = async (boardId, reqBody) => {
+  return await boardRepo.update(boardId, reqBody)
+}
+
 export default {
   createNew,
-  getDetails
+  getDetails,
+  update
 }
