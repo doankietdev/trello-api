@@ -39,8 +39,17 @@ const pushCardOrderId = async (card) => {
   }
 }
 
+const update = async (columnId, updateData) => {
+  return await getDB().collection(columnModel.COLLECTION_NAME).findOneAndUpdate(
+    { _id: new ObjectId(columnId) },
+    { $set: { ...updateData } },
+    { returnDocument: 'after' }
+  )
+}
+
 export default {
   createNew,
   findOneById,
-  pushCardOrderId
+  pushCardOrderId,
+  update
 }
