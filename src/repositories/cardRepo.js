@@ -24,7 +24,34 @@ const findOneById = async (id) => {
     throw new Error(error)
   }
 }
+
+const update = async (cardId, updateData) => {
+  Object.keys(updateData).forEach(fieldName => {
+    if (cardModel.INVALID_UPDATE_FIELDS.includes(fieldName)) {
+      delete updateData[fieldName]
+    }
+  })
+
+  try {
+    if (updateData?.boardId) {
+      updateData.boardId = new ObjectId(updateData.boardId)
+    }
+    if (updateData?.columnId) {
+      updateData.columnId = new ObjectId(updateData.columnId)
+    }
+
+    return await getDB().collection(cardModel.COLLECTION_NAME).findOneAndUpdate(
+      { _id: new ObjectId(cardId) },
+      { $set: { ...updateData } },
+      { returnDocument: 'after' }
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export default {
   createNew,
-  findOneById
+  findOneById,
+  update
 }

@@ -21,7 +21,15 @@ const update = asyncHandler(async (req, res) => {
   }).send(res)
 })
 
+const moveCardToAnotherColumn = asyncHandler(async (req, res) => {
+  await columnService.moveCardToAnotherColumn(req.body)
+  new SuccessResponse({
+    message: 'Move card to another column successfully'
+  }).send(res)
+})
+
 export default {
   createNew,
-  update
+  update,
+  moveCardToAnotherColumn
 }
