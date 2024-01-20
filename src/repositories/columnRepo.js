@@ -40,11 +40,27 @@ const pushCardOrderId = async (card) => {
 }
 
 const update = async (columnId, updateData) => {
-  return await getDB().collection(columnModel.COLLECTION_NAME).findOneAndUpdate(
-    { _id: new ObjectId(columnId) },
-    { $set: { ...updateData } },
-    { returnDocument: 'after' }
-  )
+  Object.keys(updateData).forEach(fieldName => {
+    if (columnModel.INVALID_UPDATE_FIELDS.includes(fieldName)) {
+      delete updateData[fieldName]
+    }
+  })
+
+  try {
+    if (updateData?.cardOrderIds) {
+      updateData.cardOrderIds = updateData.cardOrderIds.map(cardId => {
+        return new ObjectId(cardId)
+      })
+    }
+
+    return await getDB().collection(columnModel.COLLECTION_NAME).findOneAndUpdate(
+      { _id: new ObjectId(columnId) },
+      { $set: { ...updateData } },
+      { returnDocument: 'after' }
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
 }
 
 export default {

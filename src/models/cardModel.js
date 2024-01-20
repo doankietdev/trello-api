@@ -14,6 +14,8 @@ const COLLECTION_SCHEMA = Joi.object({
   _destroy: Joi.boolean().default(false)
 })
 
+const INVALID_UPDATE_FIELDS = ['_id', 'createdAt']
+
 const validate = async (card) => {
   try {
     return await COLLECTION_SCHEMA.validateAsync(card, { abortEarly: false })
@@ -25,5 +27,6 @@ const validate = async (card) => {
 export default {
   COLLECTION_NAME,
   COLLECTION_SCHEMA,
+  INVALID_UPDATE_FIELDS,
   validate
 }
