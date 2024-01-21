@@ -28,8 +28,16 @@ const moveCardToAnotherColumn = asyncHandler(async (req, res) => {
   }).send(res)
 })
 
+const deleteColumn = asyncHandler(async (req, res) => {
+  await columnService.deleteColumn(req.params.id)
+  new SuccessResponse({
+    message: 'Delete list and its cards successfully'
+  }).send(res)
+})
+
 export default {
   createNew,
   update,
-  moveCardToAnotherColumn
+  moveCardToAnotherColumn,
+  deleteColumn
 }

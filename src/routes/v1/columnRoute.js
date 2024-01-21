@@ -12,5 +12,6 @@ router.route('/move-card-to-another-column')
 
 router.route('/:id')
   .patch(columnValidation.update, columnController.update)
+  .delete(columnValidation.deleteColumn, columnController.deleteColumn)
 
 export default router
