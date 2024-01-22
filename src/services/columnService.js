@@ -1,7 +1,9 @@
+import { StatusCodes } from 'http-status-codes'
 import { slugify } from '~/utils/formatter'
 import columnRepo from '~/repositories/columnRepo'
 import boardRepo from '~/repositories/boardRepo'
 import cardRepo from '~/repositories/cardRepo'
+import ApiError from '~/utils/ApiError'
 
 const createNew = async (reqBody) => {
   const newColumn = {
@@ -39,8 +41,19 @@ const moveCardToAnotherColumn = async (reqBody) => {
   ])
 }
 
+const deleteColumn = async (id) => {
+  const column = await columnRepo.findOneById(id)
+  if (!column) throw new ApiError(StatusCodes.NOT_FOUND, 'Column not found')
+  await Promise.all([
+    columnRepo.deleteOneById(id),
+    cardRepo.deleteManyByColumnId(id),
+    boardRepo.pullColumnOrderId(column)
+  ])
+}
+
 export default {
   createNew,
   update,
-  moveCardToAnotherColumn
+  moveCardToAnotherColumn,
+  deleteColumn
 }
