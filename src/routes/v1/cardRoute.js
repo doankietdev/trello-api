@@ -7,4 +7,7 @@ const router = express.Router()
 router.route('/')
   .post(cardValidation.createNew, cardController.createNew)
 
+router.route('/:id')
+  .delete(cardValidation.deleteCard, cardController.deleteCard)
+
 export default router

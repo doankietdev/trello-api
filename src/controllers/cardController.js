@@ -13,6 +13,15 @@ const createNew = asyncHandler(async (req, res) => {
   }).send(res)
 })
 
+
+const deleteCard = asyncHandler(async (req, res) => {
+  await cardService.deleteCard(req.params.id)
+  new SuccessResponse({
+    message: 'Delete card successfully'
+  }).send(res)
+})
+
 export default {
-  createNew
+  createNew,
+  deleteCard
 }
