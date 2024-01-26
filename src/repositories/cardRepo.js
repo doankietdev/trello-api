@@ -50,6 +50,16 @@ const update = async (cardId, updateData) => {
   }
 }
 
+const deleteOneById = async (id) => {
+  try {
+    return await getDB().collection(cardModel.COLLECTION_NAME).deleteOne({
+      _id: new ObjectId(id)
+    })
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 const deleteManyByColumnId = async (columnId) => {
   try {
     return await getDB().collection(cardModel.COLLECTION_NAME).deleteMany({
@@ -64,5 +74,6 @@ export default {
   createNew,
   findOneById,
   update,
+  deleteOneById,
   deleteManyByColumnId
 }

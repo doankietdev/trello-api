@@ -39,6 +39,21 @@ const pushCardOrderId = async (card) => {
   }
 }
 
+const pullCardOrderId = async (card) => {
+  try {
+    return await getDB().collection(columnModel.COLLECTION_NAME).findOneAndUpdate(
+      { _id: new ObjectId(card?.columnId) },
+      {
+        $pull: { cardOrderIds: new ObjectId(card?._id) },
+        $set: { updatedAt: Date.now() }
+      },
+      { returnDocument: 'after' }
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 const update = async (columnId, updateData) => {
   Object.keys(updateData).forEach(fieldName => {
     if (columnModel.INVALID_UPDATE_FIELDS.includes(fieldName)) {
@@ -77,6 +92,7 @@ export default {
   createNew,
   findOneById,
   pushCardOrderId,
+  pullCardOrderId,
   update,
   deleteOneById
 }
