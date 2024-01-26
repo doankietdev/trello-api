@@ -4,6 +4,10 @@ import ApiError from '~/utils/ApiError'
 import { slugify } from '~/utils/formatter'
 import boardRepo from '~/repositories/boardRepo'
 
+const getAll = async () => {
+  return await boardRepo.findAll()
+}
+
 const createNew = async (reqBody) => {
   // handle logic
   const newBoard = {
@@ -44,6 +48,7 @@ const update = async (boardId, reqBody) => {
 }
 
 export default {
+  getAll,
   createNew,
   getDetails,
   update

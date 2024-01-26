@@ -3,6 +3,14 @@ import SuccessResponse from '~/utils/SuccessResponse'
 import asyncHandler from '~/utils/asyncHandler'
 import boardService from '~/services/boardService'
 
+const getAll = asyncHandler(async (req, res) => {
+  new SuccessResponse({
+    metadata: {
+      boards: await boardService.getAll()
+    }
+  }).send(res)
+})
+
 const createNew = asyncHandler(async (req, res) => {
   new SuccessResponse({
     statusCode: StatusCodes.CREATED,
@@ -30,6 +38,7 @@ const update = asyncHandler(async (req, res) => {
 })
 
 export default {
+  getAll,
   createNew,
   getDetails,
   update

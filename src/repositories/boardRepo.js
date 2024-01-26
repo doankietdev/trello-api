@@ -23,6 +23,14 @@ const findOneById = async (id) => {
   }
 }
 
+const findAll = async () => {
+  try {
+    return await getDB().collection(boardModel.COLLECTION_NAME).find({}).toArray()
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 const getDetails = async (boardId) => {
   try {
     return (await getDB().collection(boardModel.COLLECTION_NAME).aggregate([
@@ -97,6 +105,7 @@ const update = async (boardId, updateData) => {
 
 export default {
   createNew,
+  findAll,
   findOneById,
   getDetails,
   pushColumnOrderId,
