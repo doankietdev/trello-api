@@ -37,9 +37,17 @@ const update = asyncHandler(async (req, res) => {
   }).send(res)
 })
 
+const deleteBoard = asyncHandler(async (req, res) => {
+  await boardService.deleteBoard(req.params.id)
+  new SuccessResponse({
+    message: 'Delete board successfully'
+  }).send(res)
+})
+
 export default {
   getAll,
   createNew,
   getDetails,
-  update
+  update,
+  deleteBoard
 }

@@ -11,5 +11,6 @@ router.route('/')
 router.route('/:id')
   .get(boardController.getDetails)
   .patch(boardValidation.update, boardController.update)
+  .delete(boardValidation.deleteBoard, boardController.deleteBoard)
 
 export default router

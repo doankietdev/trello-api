@@ -3,6 +3,8 @@ import { cloneDeep } from 'lodash'
 import ApiError from '~/utils/ApiError'
 import { slugify } from '~/utils/formatter'
 import boardRepo from '~/repositories/boardRepo'
+import columnRepo from '~/repositories/columnRepo'
+import cardRepo from '~/repositories/cardRepo'
 
 const getAll = async () => {
   return await boardRepo.findAll()
@@ -47,9 +49,18 @@ const update = async (boardId, reqBody) => {
   return await boardRepo.update(boardId, reqBody)
 }
 
+const deleteBoard = async (boardId) => {
+  await Promise.all([
+    boardRepo.deleteOneById(boardId),
+    columnRepo.deleteManyByBoardId(boardId),
+    cardRepo.deleteManyByBoardId(boardId)
+  ])
+}
+
 export default {
   getAll,
   createNew,
   getDetails,
-  update
+  update,
+  deleteBoard
 }

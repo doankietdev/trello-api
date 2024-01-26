@@ -103,6 +103,16 @@ const update = async (boardId, updateData) => {
   }
 }
 
+const deleteOneById = async (boardId) => {
+  try {
+    return await getDB().collection(boardModel.COLLECTION_NAME).deleteOne(
+      { _id: new ObjectId(boardId) }
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export default {
   createNew,
   findAll,
@@ -110,5 +120,6 @@ export default {
   getDetails,
   pushColumnOrderId,
   pullColumnOrderId,
-  update
+  update,
+  deleteOneById
 }

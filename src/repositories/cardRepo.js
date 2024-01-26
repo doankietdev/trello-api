@@ -70,10 +70,21 @@ const deleteManyByColumnId = async (columnId) => {
   }
 }
 
+const deleteManyByBoardId = async (boardId) => {
+  try {
+    return await getDB().collection(cardModel.COLLECTION_NAME).deleteMany({
+      boardId: new ObjectId(boardId)
+    })
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export default {
   createNew,
   findOneById,
   update,
   deleteOneById,
-  deleteManyByColumnId
+  deleteManyByColumnId,
+  deleteManyByBoardId
 }
