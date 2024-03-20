@@ -1,15 +1,9 @@
 import 'dotenv/config'
 import { DEV_ENV } from '~/utils/constants'
 
-const {
-  NODE_ENV,
-  MONGODB_URI,
-  DATABASE_NAME,
-  APP_HOST,
-  APP_PORT
-} = process.env
+const { NODE_ENV, MONGODB_URI, DATABASE_NAME, APP_HOST, APP_PORT } = process.env
 
-export const BUID_MODE = NODE_ENV || DEV_ENV
+export const BUILD_MODE = NODE_ENV || DEV_ENV
 export const APP = {
   HOST: APP_HOST || 'localhost',
   PORT: APP_PORT || 5600

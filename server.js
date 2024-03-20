@@ -2,12 +2,20 @@
 import exitHook from 'async-exit-hook'
 import app from '~/app'
 import { connectDB, closeDB } from '~/configs/mongodb'
-import { APP } from '~/configs/environment'
+import { APP, BUILD_MODE } from '~/configs/environment'
+import { PROD_ENV } from '~/utils/constants'
 
 const startServer = async () => {
-  const server = app.listen(APP.PORT, APP.HOST, () => {
-    console.log(`Server is running at ${APP.HOST}:${APP.PORT}`)
-  })
+  let server = null
+  if (BUILD_MODE === PROD_ENV) {
+    server = app.listen(process.env.PORT, () => {
+      console.log(`Server is running at ${APP.HOST}:${APP.PORT}`)
+    })
+  } else {
+    server = app.listen(APP.PORT, APP.HOST, () => {
+      console.log(`Server is running at ${APP.HOST}:${APP.PORT}`)
+    })
+  }
 
   exitHook(() => {
     closeDB()
@@ -22,7 +30,7 @@ const startServer = async () => {
   })
 }
 
-(async () => {
+;(async () => {
   try {
     await connectDB()
     console.log('Connect to database successfully')
