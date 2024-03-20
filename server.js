@@ -9,7 +9,7 @@ const startServer = async () => {
   let server = null
   if (BUILD_MODE === PROD_ENV) {
     server = app.listen(process.env.PORT, () => {
-      console.log(`Server is running at ${APP.HOST}:${APP.PORT}`)
+      console.log(`Server is running at ${process.env.PORT}`)
     })
   } else {
     server = app.listen(APP.PORT, APP.HOST, () => {
