@@ -1,21 +1,13 @@
 /* eslint-disable no-console */
 import exitHook from 'async-exit-hook'
 import app from '~/app'
-import { connectDB, closeDB } from '~/configs/mongodb'
-import { APP, BUILD_MODE } from '~/configs/environment'
-import { PROD_ENV } from '~/utils/constants'
+import { APP } from '~/configs/environment'
+import { closeDB, connectDB } from '~/configs/mongodb'
 
 const startServer = async () => {
-  let server = null
-  if (BUILD_MODE === PROD_ENV) {
-    server = app.listen(process.env.PORT, () => {
-      console.log(`Server is running at ${process.env.PORT}`)
-    })
-  } else {
-    server = app.listen(APP.PORT, APP.HOST, () => {
-      console.log(`Server is running at ${APP.HOST}:${APP.PORT}`)
-    })
-  }
+  const server = app.listen(APP.PORT, () => {
+    console.log(`Server is running on port: ${APP.PORT}`)
+  })
 
   exitHook(() => {
     closeDB()
