@@ -58,7 +58,7 @@ Welcome to the **Trello Clone API** repository! This project provides a powerful
 
 ## Deployment Environments
 
-- **Staging**: [trello-clone-api.onrender.com](https://trello-api-vz16.onrender.com)
+- **Staging**: [trello-api-vz16.onrender.com](https://trello-api-vz16.onrender.com)
 
   - **Testing account:**
     Email: testuser@example.com  
