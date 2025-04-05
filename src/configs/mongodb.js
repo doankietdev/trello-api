@@ -20,6 +20,9 @@ export const closeDB = async () => {
   await mongoClient.close()
 }
 
+/**
+ * @returns {import('mongodb').Db}
+ */
 export const getDB = () => {
   if (!trelloDatabaseInstance) throw new Error('Connect to database first!')
   return trelloDatabaseInstance

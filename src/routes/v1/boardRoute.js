@@ -1,16 +1,17 @@
 import express from 'express'
 import boardValidation from '~/validations/boardValidation'
 import boardController from '~/controllers/boardController'
+import authMiddleware from '~/middlewares/authMiddleware'
 
 const router = express.Router()
 
 router.route('/')
-  .get(boardController.getAll)
-  .post(boardValidation.createNew, boardController.createNew)
+  .get(authMiddleware.isAuthorized, boardController.getAll)
+  .post(authMiddleware.isAuthorized, boardValidation.createNew, boardController.createNew)
 
 router.route('/:id')
-  .get(boardController.getDetails)
-  .patch(boardValidation.update, boardController.update)
-  .delete(boardValidation.deleteBoard, boardController.deleteBoard)
+  .get(authMiddleware.isAuthorized, boardController.getDetails)
+  .patch(authMiddleware.isAuthorized, boardValidation.update, boardController.update)
+  .delete(authMiddleware.isAuthorized, boardValidation.deleteBoard, boardController.deleteBoard)
 
 export default router
